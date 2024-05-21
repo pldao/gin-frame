@@ -7,7 +7,6 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/PLDao/gin-frame/cmd/command"
 	"github.com/PLDao/gin-frame/cmd/cron"
 	"github.com/PLDao/gin-frame/cmd/server"
 	"github.com/PLDao/gin-frame/cmd/version"
@@ -58,8 +57,6 @@ func init() {
 	rootCmd.AddCommand(version.Cmd)
 	// 启动服务 go-layout server
 	rootCmd.AddCommand(server.Cmd)
-	// 启动单词运行脚本 go-layout command demo
-	rootCmd.AddCommand(command.Cmd)
 	// 启动计划任务(定时器)
 	rootCmd.AddCommand(cron.Cmd)
 }
