@@ -1,6 +1,6 @@
 package global
 
 const (
-	Issuer  = "go-layout"
+	Issuer  = "go-frame"
 	Subject = "pc-admin"
 )

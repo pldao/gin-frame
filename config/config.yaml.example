@@ -10,12 +10,12 @@ jwt:
   refresh_ttl: 3600
   secret_key: Wj7rctFCgio1UxDXQEQbr64S5Q4JNQQthee9PcAKxFnZXFcnUlMlj8uBTfSi9xGq
 mysql:
-  enable: false
+  enable: true
   host: 127.0.0.1
-  port: 3306
-  database: test
+  port: 3307
+  database: ginframe
   username: root
-  password: root1234
+  password: sky
   charset: utf8mb4
   table_prefix: ""
   max_idle_conns: 10
