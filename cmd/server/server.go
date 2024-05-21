@@ -20,7 +20,6 @@ var (
 		PreRun: func(cmd *cobra.Command, args []string) {
 			// 初始化数据库
 			data.InitData()
-
 			// 初始化验证器
 			validator.InitValidatorTrans("zh")
 		},

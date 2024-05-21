@@ -18,8 +18,8 @@ import (
 
 var (
 	rootCmd = &cobra.Command{
-		Use:          "go-layout",
-		Short:        "go-layout",
+		Use:          "go-frame",
+		Short:        "go-frame",
 		SilenceUsage: true,
 		Long: `Gin framework is used as the core of this project to build a scaffold, 
 based on the project can be quickly completed business development, out of the box 📦`,
@@ -60,7 +60,7 @@ func init() {
 	rootCmd.AddCommand(server.Cmd)
 	// 启动单词运行脚本 go-layout command demo
 	rootCmd.AddCommand(command.Cmd)
-	// 启动计划任务
+	// 启动计划任务(定时器)
 	rootCmd.AddCommand(cron.Cmd)
 }
 
