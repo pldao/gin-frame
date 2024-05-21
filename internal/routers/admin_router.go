@@ -14,6 +14,7 @@ func SetAdminApiRoute(e *gin.Engine) {
 		demo := controller.NewDemoController()
 		v1.GET("hello-world", demo.HelloWorld)
 		// 无需校验权限
+		// 预先生成管理员然后通过这个接口拿到access_token
 		loginC := admin_v1.NewLoginController()
 		v1.POST("admin/login", loginC.Login)
 

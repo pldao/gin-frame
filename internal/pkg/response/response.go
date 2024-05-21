@@ -105,11 +105,6 @@ func (r *Response) json(c *gin.Context) {
 	if r.result.Msg == "" {
 		r.result.Msg = ErrorText.Text(r.result.Code)
 	}
-
-	// if r.Data == nil {
-	// 	r.Data = struct{}{}
-	// }
-
 	r.result.Cost = time.Since(c.GetTime("requestStartTime")).String()
 	c.AbortWithStatusJSON(r.httpCode, r.result)
 }
