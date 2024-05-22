@@ -24,16 +24,16 @@ type KeyValue struct {
 }
 
 func TestApi(t *testing.T) {
-	datas := []KeyValue{
-		{"username", "super_admin"},
-		{"password", "123456"},
-	}
-	testmain(arrgument(datas), postRequest)
-
 	//datas := []KeyValue{
-	//	{"name", "alex"},
+	//	{"username", "super_admin"},
+	//	{"password", "123456"},
 	//}
-	//testmain(arrgument(datas), getRequest)
+	//testmain(arrgument(datas), postRequest)
+
+	datas := []KeyValue{
+		{"name", "alex"},
+	}
+	testmain(arrgument(datas), getRequest)
 }
 
 func arrgument(data []KeyValue) map[string]string {

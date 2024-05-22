@@ -38,3 +38,6 @@ logger:
     max_backups: 15
     max_age: 15
     compress: false
+limit:
+  max_requests: 100
+  time_window: 1

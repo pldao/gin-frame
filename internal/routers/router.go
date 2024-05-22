@@ -43,6 +43,9 @@ func SetRouters() *gin.Engine {
 			"message": "pong!",
 		})
 	})
+	ipLimit := middleware.NewRateLimiter()
+	engine.Use(ipLimit.IpLimit)
+	//e.Use(ipLimit.RateLimit(1 * time.Second, 15, 15))
 
 	// 设置 API 路由
 	SetAdminApiRoute(engine)

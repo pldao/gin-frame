@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"github.com/PLDao/gin-frame/config"
 	"github.com/PLDao/gin-frame/internal/controller"
 	"net/http"
 	"sync"
@@ -8,6 +9,11 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/juju/ratelimit"
+)
+
+var (
+	requestInfoMap = make(map[string]*RequestInfo) // IP到请求信息的映射
+	mutex          = &sync.Mutex{}                 // 用于保护requestInfoMap的互斥锁
 )
 
 type RateLimiter struct {
@@ -23,13 +29,6 @@ type RequestInfo struct {
 	RequestNum     int       // 请求计数
 }
 
-var (
-	requestInfoMap = make(map[string]*RequestInfo) // IP到请求信息的映射
-	mutex          = &sync.Mutex{}                 // 用于保护requestInfoMap的互斥锁
-	maxRequests    = 5                             // 允许的最大请求数
-	timeWindow     = 1 * time.Second               // 时间窗口
-)
-
 // IP限流器
 func (l RateLimiter) IpLimit(c *gin.Context) {
 	ip := c.ClientIP()
@@ -43,7 +42,7 @@ func (l RateLimiter) IpLimit(c *gin.Context) {
 		return
 	}
 	// 如果IP存在，检查时间窗口
-	if time.Since(info.LastAccessTime) > timeWindow {
+	if time.Since(info.LastAccessTime) > config.Config.Limit.TimeWindow {
 		// 如果超过时间窗口，重置请求计数
 		info.RequestNum = 1
 		info.LastAccessTime = time.Now()
@@ -51,7 +50,7 @@ func (l RateLimiter) IpLimit(c *gin.Context) {
 	}
 	info.RequestNum++ // 如果在时间窗口内，增加请求计数
 	// 如果请求计数超过限制，禁止访问
-	if info.RequestNum > maxRequests {
+	if info.RequestNum > config.Config.Limit.MaxRequests {
 		l.Fail(c, http.StatusTooManyRequests, "请求过于频繁，请稍后再试！")
 		c.Abort()
 		return
