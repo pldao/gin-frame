@@ -22,6 +22,21 @@ func TestApi(t *testing.T) {
 	testmain(generateRandomParams())
 }
 
+func generateRandomParams() map[string]interface{} {
+	params := make(map[string]interface{})
+	//paramCount := rand.Intn(5) + 1 // Random number of parameters between 1 and 5
+	//
+	//for i := 0; i < paramCount; i++ {
+	//	key := fmt.Sprintf("param%d", i)
+	//	value := fmt.Sprintf("value%d", rand.Intn(100))
+	//	params[key] = value
+	//}
+	params["username"] = "super_admin"
+	params["password"] = "123456"
+	return params
+
+}
+
 func testmain(input map[string]interface{}) {
 	var wg sync.WaitGroup
 	requestsChan := make(chan int, concurrency)
@@ -134,19 +149,4 @@ func getRequest(params map[string]interface{}) (time.Duration, error) {
 	}
 
 	return latency, nil
-}
-
-func generateRandomParams() map[string]interface{} {
-	params := make(map[string]interface{})
-	//paramCount := rand.Intn(5) + 1 // Random number of parameters between 1 and 5
-	//
-	//for i := 0; i < paramCount; i++ {
-	//	key := fmt.Sprintf("param%d", i)
-	//	value := fmt.Sprintf("value%d", rand.Intn(100))
-	//	params[key] = value
-	//}
-	params["username"] = "super_admin"
-	params["password"] = "123456"
-	return params
-
 }
