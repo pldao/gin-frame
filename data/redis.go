@@ -6,8 +6,6 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
-var Rdb *redis.Client
-
 func initRedis() {
 	Rdb = redis.NewClient(&redis.Options{
 		Addr:     c.Config.Redis.Host + ":" + c.Config.Redis.Port,

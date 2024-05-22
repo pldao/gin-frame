@@ -31,7 +31,6 @@ func (api LoginController) Login(c *gin.Context) {
 		api.Err(c, err)
 		return
 	}
-
 	api.Success(c, result)
 	return
 }

@@ -10,8 +10,6 @@ import (
 	"gorm.io/gorm/schema"
 )
 
-var MysqlDB *gorm.DB
-
 type Writer interface {
 	Printf(string, ...interface{})
 }
