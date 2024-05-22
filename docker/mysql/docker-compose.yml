@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  mysql8_blob:
+    image: mysql:8.0
+    restart: unless-stopped
+    container_name: mysql8_blob
+    volumes:
+      - ../data/mysql:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: sky
+      MYSQL_DATABASE: ginframe
+      MYSQL_USER: alex
+      MYSQL_PASSWORD: sky
+
+volumes:
+  mysql_data:

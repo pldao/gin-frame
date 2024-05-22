@@ -41,3 +41,6 @@ logger:
 limit:
   max_requests: 100
   time_window: 1
+limit:
+  max_requests: 100
+  time_window: 1

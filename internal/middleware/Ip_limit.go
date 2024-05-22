@@ -31,6 +31,7 @@ type RequestInfo struct {
 
 // IP限流器
 func (l RateLimiter) IpLimit(c *gin.Context) {
+	//X-Appengine-Remote-Addr get user real ip
 	ip := c.ClientIP()
 	mutex.Lock()
 	defer mutex.Unlock()

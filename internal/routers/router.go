@@ -37,12 +37,10 @@ func SetRouters() *gin.Engine {
 	if err != nil {
 		panic(err)
 	}
-	// ping
-	engine.GET("/ping", func(c *gin.Context) {
-		c.AbortWithStatusJSON(http.StatusOK, gin.H{
-			"message": "pong!",
-		})
-	})
+
+	ipLimit := middleware.NewRateLimiter()
+	engine.Use(ipLimit.IpLimit)
+	//e.Use(ipLimit.RateLimit(1 * time.Second, 15, 15))
 	ipLimit := middleware.NewRateLimiter()
 	engine.Use(ipLimit.IpLimit)
 	//e.Use(ipLimit.RateLimit(1 * time.Second, 15, 15))
