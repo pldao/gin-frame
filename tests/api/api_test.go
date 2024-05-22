@@ -14,30 +14,37 @@ const (
 	baseurl     = "http://127.0.0.1:9001/"
 	geturl      = baseurl + "api/v1/hello-world"
 	posturl     = baseurl + "api/v1/admin/login"
-	numRequests = 1000
+	numRequests = 100
 	concurrency = 10
 )
 
+type KeyValue struct {
+	Key   string
+	Value string
+}
+
 func TestApi(t *testing.T) {
-	testmain(generateRandomParams())
-}
+	datas := []KeyValue{
+		{"username", "super_admin"},
+		{"password", "123456"},
+	}
+	testmain(arrgument(datas), postRequest)
 
-func generateRandomParams() map[string]interface{} {
-	params := make(map[string]interface{})
-	//paramCount := rand.Intn(5) + 1 // Random number of parameters between 1 and 5
-	//
-	//for i := 0; i < paramCount; i++ {
-	//	key := fmt.Sprintf("param%d", i)
-	//	value := fmt.Sprintf("value%d", rand.Intn(100))
-	//	params[key] = value
+	//datas := []KeyValue{
+	//	{"name", "alex"},
 	//}
-	params["username"] = "super_admin"
-	params["password"] = "123456"
-	return params
-
+	//testmain(arrgument(datas), getRequest)
 }
 
-func testmain(input map[string]interface{}) {
+func arrgument(data []KeyValue) map[string]string {
+	var dataMap = make(map[string]string)
+	for _, v := range data {
+		dataMap[v.Key] = v.Value
+	}
+	return dataMap
+}
+
+func testmain(input map[string]string, requestFunc func(map[string]string) (time.Duration, error)) {
 	var wg sync.WaitGroup
 	requestsChan := make(chan int, concurrency)
 	resultsChan := make(chan time.Duration, numRequests)
@@ -60,7 +67,7 @@ func testmain(input map[string]interface{}) {
 	// Start workers
 	for i := 0; i < concurrency; i++ {
 		wg.Add(1)
-		go worker(i, func() (time.Duration, error) { return postRequest(input) })
+		go worker(i, func() (time.Duration, error) { return requestFunc(input) })
 	}
 
 	// Send requests
@@ -100,7 +107,7 @@ func testmain(input map[string]interface{}) {
 	fmt.Printf("Throughput: %.2f requests/second\n", throughput)
 }
 
-func postRequest(params map[string]interface{}) (time.Duration, error) {
+func postRequest(params map[string]string) (time.Duration, error) {
 	jsonData, err := json.Marshal(params)
 	if err != nil {
 		return 0, err
@@ -129,7 +136,7 @@ func postRequest(params map[string]interface{}) (time.Duration, error) {
 	return latency, nil
 }
 
-func getRequest(params map[string]interface{}) (time.Duration, error) {
+func getRequest(params map[string]string) (time.Duration, error) {
 	jsonData, err := json.Marshal(params)
 	if err != nil {
 		return 0, err

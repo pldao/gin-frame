@@ -19,6 +19,5 @@ func (api DemoController) HelloWorld(c *gin.Context) {
 	if !ok {
 		str = "gin-layout"
 	}
-
 	api.Success(c, fmt.Sprintf("hello %s", str))
 }

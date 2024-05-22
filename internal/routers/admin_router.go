@@ -12,11 +12,12 @@ func SetAdminApiRoute(e *gin.Engine) {
 	v1 := e.Group("api/v1")
 	{
 		demo := controller.NewDemoController()
-		v1.GET("hello-world", demo.HelloWorld)
+		ipLimit := middleware.NewRateLimiter()
+		v1.GET("hello-world", ipLimit.IpLimit, demo.HelloWorld)
 		// 无需校验权限
 		// 预先生成管理员然后通过这个接口拿到access_token
 		loginC := admin_v1.NewLoginController()
-		v1.POST("admin/login", loginC.Login)
+		v1.POST("admin/login", ipLimit.IpLimit, loginC.Login)
 
 		// 需要校验权限
 		reqAuth := v1.Group("", middleware.AdminAuthHandler())
