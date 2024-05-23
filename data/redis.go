@@ -3,6 +3,7 @@ package data
 import (
 	"context"
 	c "github.com/PLDao/gin-frame/config"
+	log "github.com/PLDao/gin-frame/internal/pkg/logger"
 	"github.com/go-redis/redis/v8"
 )
 
@@ -18,4 +19,5 @@ func initRedis() {
 	if err != nil {
 		panic("Redis connection failed：" + err.Error())
 	}
+	log.Logger.Sugar().Info(" Redis connection successful")
 }

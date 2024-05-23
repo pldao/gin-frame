@@ -30,6 +30,11 @@ migrate-up:
 migrate-down:
 	$(DB_MIGRATE_CMD) -path $(MIGRATION_PATH) down
 
+install:
+	go mod tidy
+	go mod verify
+	go mod download
+
 # 清理（可根据需要定义）
 clean:
 	# 这里可以添加清理临时文件或构建产物的命令

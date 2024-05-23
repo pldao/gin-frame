@@ -63,4 +63,9 @@ func initMysql() {
 	sqlDB.SetMaxOpenConns(c.Config.Mysql.MaxOpenConns)
 	// SetConnMaxLifetime 设置了连接可复用的最大时间。
 	sqlDB.SetConnMaxLifetime(c.Config.Mysql.MaxLifetime)
+	err = sqlDB.Ping()
+	if err != nil {
+		panic("Mysql connection failed：" + err.Error())
+	}
+	log.Logger.Sugar().Info("Mysql connection success")
 }

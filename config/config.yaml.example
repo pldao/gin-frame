@@ -45,9 +45,9 @@ Mongo:
   Enable: false
   Host: "127.0.0.1"
   Port: 27017
-  Username: "admin"
-  Password: "adminpassword"
-  Database: "testdb"
+  Username: "root"
+  Password: "examplepassword"
+  Database: "yourdbname"
   MaxPoolSize: 100
   MinPoolSize: 10
   MaxConnIdleTime: 30s

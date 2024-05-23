@@ -5,15 +5,15 @@ import (
 )
 
 type MongoConfig struct {
-	Enable          bool
-	Host            string
-	Port            uint16
-	Username        string
-	Password        string
-	Database        string
-	MaxPoolSize     uint64
-	MinPoolSize     uint64
-	MaxConnIdleTime time.Duration
+	Enable          bool          `mapstructure:"enable"`
+	Host            string        `mapstructure:"host"`
+	Port            uint16        `mapstructure:"port"`
+	Username        string        `mapstructure:"username"`
+	Password        string        `mapstructure:"password"`
+	Database        string        `mapstructure:"database"`
+	MaxPoolSize     uint64        `mapstructure:"max_pool_size"`
+	MinPoolSize     uint64        `mapstructure:"min_pool_size"`
+	MaxConnIdleTime time.Duration `mapstructure:"max_conn_idle_time"`
 }
 
 var Mongo = MongoConfig{
