@@ -10,6 +10,7 @@ const (
 	UserDoesNotExist   = 10001
 	ServerError        = 10101
 	TooManyRequests    = 10102
+	MONGOERROR         = 20100
 )
 
 type ErrorText struct {

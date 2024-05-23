@@ -18,6 +18,12 @@ func SetAdminApiRoute(e *gin.Engine) {
 		loginC := admin_v1.NewLoginController()
 		v1.POST("admin/login", loginC.Login)
 
+		social := v1.Group("social")
+		{
+			socialUser := admin_v1.NewUserSocialController()
+			social.GET("list", socialUser.GetAllUserSocial)
+			social.POST("add", socialUser.AddUserSocial)
+		}
 		// 需要校验权限
 		reqAuth := v1.Group("", middleware.AdminAuthHandler())
 		{
