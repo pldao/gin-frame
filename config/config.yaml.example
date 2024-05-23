@@ -25,7 +25,7 @@ redis:
   enable: false
   host: 127.0.0.1
   port: 6379
-  password:
+  password: sky
   database: 0
 logger:
   default_division: time
@@ -43,11 +43,11 @@ limit:
   time_window: 1s
 Mongo:
   Enable: false
-  Host: "127.0.0.1"
+  Host: 127.0.0.1
   Port: 27017
-  Username: "root"
-  Password: "examplepassword"
-  Database: "yourdbname"
+  Username: root
+  Password: examplepassword
+  Database: yourdbname
   MaxPoolSize: 100
   MinPoolSize: 10
   MaxConnIdleTime: 30s
