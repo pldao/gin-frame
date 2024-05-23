@@ -6,8 +6,8 @@ app:
 #  watch_config: false
 #  base_path: ""
 jwt:
-  ttl: 7200
-  refresh_ttl: 3600
+  ttl: 7200s
+  refresh_ttl: 3600s
   secret_key: Wj7rctFCgio1UxDXQEQbr64S5Q4JNQQthee9PcAKxFnZXFcnUlMlj8uBTfSi9xGq
 mysql:
   enable: true
@@ -40,7 +40,14 @@ logger:
     compress: false
 limit:
   max_requests: 100
-  time_window: 1
-limit:
-  max_requests: 100
-  time_window: 1
+  time_window: 1s
+Mongo:
+  Enable: false
+  Host: "127.0.0.1"
+  Port: 27017
+  Username: "admin"
+  Password: "adminpassword"
+  Database: "testdb"
+  MaxPoolSize: 100
+  MinPoolSize: 10
+  MaxConnIdleTime: 30s

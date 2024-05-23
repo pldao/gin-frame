@@ -10,7 +10,6 @@ import (
 	"os"
 	"path/filepath"
 	"sync"
-	"time"
 )
 
 // Conf 配置项主结构体
@@ -21,6 +20,7 @@ type Conf struct {
 	Logger    LoggerConfig `mapstructure:"logger"`
 	Jwt       JwtConfig    `mapstructure:"jwt"`
 	Limit     LimitConfig  `mapstructure:"limit"`
+	Mongo     MongoConfig  `mapstructure:"mongo"`
 }
 
 var (
@@ -31,6 +31,7 @@ var (
 		Logger:    Logger,
 		Jwt:       Jwt,
 		Limit:     Limit,
+		Mongo:     Mongo,
 	}
 	once sync.Once
 	V    *viper.Viper
@@ -43,11 +44,6 @@ func InitConfig(configPath string) {
 
 		// 检查jwtSecretKey
 		checkJwtSecretKey()
-
-		Config.Jwt.TTL = enlargeTime(Config.Jwt.TTL)
-		Config.Jwt.RefreshTTL = enlargeTime(Config.Jwt.RefreshTTL)
-		Config.Limit.TimeWindow = enlargeTime(Config.Limit.TimeWindow)
-
 	})
 }
 
@@ -153,8 +149,4 @@ func copyConf(exampleConfig, config string) {
 	if err != nil {
 		panic("写入配置文件失败: " + err.Error())
 	}
-}
-
-func enlargeTime(conTime time.Duration) time.Duration {
-	return conTime * time.Second
 }
