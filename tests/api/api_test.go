@@ -5,14 +5,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 	"sync"
 	"testing"
 	"time"
 )
 
 const (
-	baseurl     = "http://127.0.0.1:9001/"
-	geturl      = baseurl + "api/v1/hello-world"
+	baseurl = "http://127.0.0.1:9001/"
+	//geturl      = baseurl + "api/v1/hello-world"
+	geturl = baseurl + "api/v1/social/list"
+
 	posturl     = baseurl + "api/v1/admin/login"
 	numRequests = 100
 	concurrency = 10
@@ -31,7 +34,7 @@ func TestApi(t *testing.T) {
 	//testmain(arrgument(datas), postRequest)
 
 	datas := []KeyValue{
-		{"name", "alex"},
+		{"username", "aexliu"},
 	}
 	testmain(arrgument(datas), getRequest)
 }
@@ -137,13 +140,13 @@ func postRequest(params map[string]string) (time.Duration, error) {
 }
 
 func getRequest(params map[string]string) (time.Duration, error) {
-	jsonData, err := json.Marshal(params)
-	if err != nil {
-		return 0, err
+	query := geturl + "?"
+	for key, value := range params {
+		query += key + "=" + url.QueryEscape(value) + "&"
 	}
 
 	start := time.Now()
-	resp, err := http.Get(geturl + "?" + string(jsonData))
+	resp, err := http.Get(query)
 	latency := time.Since(start)
 
 	if err != nil {
