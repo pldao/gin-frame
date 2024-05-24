@@ -1,16 +1,20 @@
 package errors
 
 const (
-	SUCCESS            = 0
-	FAILURE            = 1
-	AuthorizationError = 403
-	NotFound           = 404
-	NotLogin           = 401
-	InvalidParameter   = 10000
-	UserDoesNotExist   = 10001
-	ServerError        = 10101
-	TooManyRequests    = 10102
-	MONGOERROR         = 20100
+	SUCCESS             = 0
+	FAILURE             = 1
+	AuthorizationError  = 403
+	NotFound            = 404
+	NotLogin            = 401
+	InvalidParameter    = 10000
+	UserDoesNotExist    = 10001
+	ServerError         = 10101
+	TooManyRequests     = 10102
+	SocialAddError      = 20100
+	SocialListError     = 20101
+	SocialAllReadyExist = 20102
+	SocialUpdateError   = 20103
+	SocialNameNotExist  = 20104
 )
 
 type ErrorText struct {

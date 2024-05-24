@@ -44,3 +44,17 @@ func (api UserSocialController) GetAllUserSocial(c *gin.Context) {
 	}
 	api.Success(c, res)
 }
+
+func (api UserSocialController) UpdateSocial(c *gin.Context) {
+	socialForm := form.NewUserSocialForm()
+	if err := validator.CheckPostParams(c, &socialForm); err != nil {
+		return
+	}
+	err := user_social.NewUserAddSocialController().UpdateSocial(socialForm)
+	if err != nil {
+		api.Err(c, err)
+		return
+	}
+	api.Success(c, nil)
+	return
+}

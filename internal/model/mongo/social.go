@@ -41,10 +41,8 @@ func (s *Social) AddSocial(param *form.UserSocial) error {
 			"socials": SocialModel{param.SocialName, param.SocialLink},
 		},
 	}
-
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-
 	_, err := s.Collection.UpdateOne(ctx, filter, update, options.Update().SetUpsert(true))
 	return err
 }
@@ -59,6 +57,23 @@ func (s *Social) ListSocial(userName string) ([]*SocialModel, error) {
 		return nil, err
 	}
 	return social.Socials, nil
+}
+
+func (s *Social) UpdateSocial(param *form.UserSocial) error {
+	filter := bson.M{"username": param.UserName}
+	update := bson.M{
+		"$set": bson.M{
+			"socials.$[elem].social_link": param.SocialLink,
+		},
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	_, err := s.Collection.UpdateOne(ctx, filter, update, options.Update().SetArrayFilters(options.ArrayFilters{
+		Filters: []interface{}{
+			bson.M{"elem.social_name": param.SocialName},
+		},
+	}))
+	return err
 }
 
 //func (s *Social) DelSocial(userName string, socialName string) error {
