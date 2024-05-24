@@ -81,7 +81,20 @@ migrate -database 'mysql://root:sky@tcp(127.0.0.1:3307)/ginframe?charset=utf8mb4
 
 ```
 
+## before(docker)
 
+start:
+```shell
+cd docker
+./run_docker.sh
+```
+
+delete:
+```shell
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+rm -rf data
+```
 
 ## 详解
 
@@ -138,3 +151,4 @@ curl --location --request GET 'http://127.0.0.1:9001/api/v1/admin-user/get' --he
 ```
 
 这个token除了主动生成，在有效时间内有效，如果刷新时间大于0那么就会在返回体中返回新的token，如果超时没有请求就得重新调用接口生成
+
