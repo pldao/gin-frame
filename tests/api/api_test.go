@@ -13,8 +13,8 @@ import (
 
 const (
 	baseurl = "http://127.0.0.1:9001/"
-	//geturl      = baseurl + "api/v1/hello-world"
-	geturl = baseurl + "api/v1/social/list"
+	geturl1 = baseurl + "api/v1/hello-world"
+	geturl2 = baseurl + "api/v1/social/list"
 
 	posturl     = baseurl + "api/v1/admin/login"
 	numRequests = 100
@@ -36,7 +36,9 @@ func TestApi(t *testing.T) {
 	datas := []KeyValue{
 		{"username", "aexliu"},
 	}
-	testmain(arrgument(datas), getRequest)
+	testmain(arrgument(datas), geturl2, getRequest)
+	testmain(arrgument(datas), geturl1, getRequest)
+
 }
 
 func arrgument(data []KeyValue) map[string]string {
@@ -47,7 +49,7 @@ func arrgument(data []KeyValue) map[string]string {
 	return dataMap
 }
 
-func testmain(input map[string]string, requestFunc func(map[string]string) (time.Duration, error)) {
+func testmain(input map[string]string, link string, requestFunc func(map[string]string, string) (time.Duration, error)) {
 	var wg sync.WaitGroup
 	requestsChan := make(chan int, concurrency)
 	resultsChan := make(chan time.Duration, numRequests)
@@ -70,7 +72,7 @@ func testmain(input map[string]string, requestFunc func(map[string]string) (time
 	// Start workers
 	for i := 0; i < concurrency; i++ {
 		wg.Add(1)
-		go worker(i, func() (time.Duration, error) { return requestFunc(input) })
+		go worker(i, func() (time.Duration, error) { return requestFunc(input, link) })
 	}
 
 	// Send requests
@@ -110,13 +112,13 @@ func testmain(input map[string]string, requestFunc func(map[string]string) (time
 	fmt.Printf("Throughput: %.2f requests/second\n", throughput)
 }
 
-func postRequest(params map[string]string) (time.Duration, error) {
+func postRequest(params map[string]string, postUrl string) (time.Duration, error) {
 	jsonData, err := json.Marshal(params)
 	if err != nil {
 		return 0, err
 	}
 
-	req, err := http.NewRequest("POST", posturl, bytes.NewBuffer(jsonData))
+	req, err := http.NewRequest("POST", postUrl, bytes.NewBuffer(jsonData))
 	if err != nil {
 		return 0, err
 	}
@@ -139,8 +141,8 @@ func postRequest(params map[string]string) (time.Duration, error) {
 	return latency, nil
 }
 
-func getRequest(params map[string]string) (time.Duration, error) {
-	query := geturl + "?"
+func getRequest(params map[string]string, getUrl string) (time.Duration, error) {
+	query := getUrl + "?"
 	for key, value := range params {
 		query += key + "=" + url.QueryEscape(value) + "&"
 	}
