@@ -57,3 +57,18 @@ func (api AdminUserController) Delete(c *gin.Context) {
 	api.Success(c, result)
 	return
 }
+
+func (api AdminUserController) AddUser(c *gin.Context) {
+	// 初始化参数结构体
+	addAdminUser := form.NewAddAdminUserForm()
+	if err := validator.CheckPostParams(c, &addAdminUser); err != nil {
+		return
+	}
+	if err := admin_auth.NewAdminUserService().Register(addAdminUser); err != nil {
+		api.Err(c, err)
+		return
+	}
+	api.Success(c, "success")
+	return
+
+}
