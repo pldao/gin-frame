@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"github.com/PLDao/gin-frame/config"
 	"github.com/PLDao/gin-frame/internal/global"
 	e "github.com/PLDao/gin-frame/internal/pkg/errors"
@@ -42,7 +41,6 @@ func AdminAuthHandler() gin.HandlerFunc {
 			now := time.Now()
 			diff := exp.Time.Sub(now)
 			refreshTTL := config.Config.Jwt.RefreshTTL * time.Second
-			fmt.Println(diff.Seconds(), refreshTTL)
 			if diff < refreshTTL {
 				tokenResponse, _ := admin_auth.NewLoginService().Refresh(adminCustomClaims.UserID)
 				c.Writer.Header().Set("refresh-access-token", tokenResponse.AccessToken)

@@ -7,3 +7,7 @@ type AddAdminUser struct {
 	Email    string `form:"email" json:"email"  binding:"omitempty,email"`
 	IsAdmin  int8   `form:"is_admin" json:"is_admin"  binding:"omitempty,oneof=0 1"`
 }
+
+func NewAddAdminUserForm() *AddAdminUser {
+	return &AddAdminUser{}
+}

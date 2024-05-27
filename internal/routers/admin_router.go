@@ -18,6 +18,7 @@ func SetAdminApiRoute(e *gin.Engine) {
 		loginC := admin_v1.NewLoginController()
 		v1.POST("admin/login", loginC.Login)
 
+		// social interface
 		social := v1.Group("social")
 		{
 			socialUser := admin_v1.NewUserSocialController()
@@ -25,6 +26,7 @@ func SetAdminApiRoute(e *gin.Engine) {
 			social.POST("add", socialUser.AddUserSocial)
 			social.PUT("update", socialUser.UpdateSocial)
 		}
+
 		// 需要校验权限
 		reqAuth := v1.Group("", middleware.AdminAuthHandler())
 		{
@@ -34,6 +36,7 @@ func SetAdminApiRoute(e *gin.Engine) {
 				r := admin_v1.NewAdminUserController()
 				// 获取用户信息
 				adminUser.GET("get", r.GetUserInfo)
+				adminUser.POST("add", r.AddUser)
 			}
 
 			// api权限管理
