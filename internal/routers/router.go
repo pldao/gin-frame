@@ -40,7 +40,7 @@ func SetRouters() *gin.Engine {
 
 	// 功能性middleware
 	engine.Use(
-		middleware.NewRateLimiter().IpLimit,
+		middleware.IpLimit(),
 		middleware.TimestampMiddleware(),
 	)
 	//e.Use(ipLimit.RateLimit(1 * time.Second, 15, 15))
