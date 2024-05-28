@@ -7,6 +7,7 @@ const (
 	NotFound            = 411
 	NotLogin            = 412
 	NotTimeout          = 413
+	AecFail             = 414
 	InvalidParameter    = 10000
 	UserDoesNotExist    = 10001
 	ServerError         = 10101

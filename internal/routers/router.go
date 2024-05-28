@@ -42,6 +42,7 @@ func SetRouters() *gin.Engine {
 	engine.Use(
 		middleware.IpLimit(),
 		middleware.TimestampMiddleware(),
+		middleware.AecMiddleware(),
 	)
 	//e.Use(ipLimit.RateLimit(1 * time.Second, 15, 15))
 

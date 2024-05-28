@@ -3,9 +3,15 @@
 # 设置变量
 GO_CMD := go
 MAIN_PKG := main.go
+GO_BUILD := debug
 SERVER_CMD := $(GO_CMD) run $(MAIN_PKG)
 DB_MIGRATE_CMD := migrate -database 'mysql://root:sky@tcp(127.0.0.1:3307)/ginframe?charset=utf8mb4&parseTime=True&loc=Local'
 MIGRATION_PATH := data/migrations
+GOLINT=golangci-lint
+
+setup:
+	go mod tidy
+	go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
 
 # 目标规则
 all: run
@@ -13,6 +19,13 @@ all: run
 # 启动后端程序
 run:
 	$(SERVER_CMD) server
+
+lint:
+	@echo "--> Running linter"
+	$(GOLINT) run --build-tags=$(GO_BUILD) --out-format=tab
+
+format: lint-install
+	@golangci-lint run --build-tags=$(GO_BUILD) --out-format=tab --fix
 
 # 将API全部存入数据库
 store-api:
