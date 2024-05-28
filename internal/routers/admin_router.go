@@ -1,7 +1,6 @@
 package routers
 
 import (
-	"github.com/PLDao/gin-frame/internal/controller"
 	"github.com/PLDao/gin-frame/internal/controller/admin_v1"
 	"github.com/PLDao/gin-frame/internal/middleware"
 	"github.com/gin-gonic/gin"
@@ -11,8 +10,6 @@ func SetAdminApiRoute(e *gin.Engine) {
 	// version 1
 	v1 := e.Group("api/v1")
 	{
-		demo := controller.NewDemoController()
-		v1.GET("hello-world", demo.HelloWorld)
 		// 无需校验权限
 		// 预先生成管理员然后通过这个接口拿到access_token
 		loginC := admin_v1.NewLoginController()
