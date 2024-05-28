@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/PLDao/gin-frame/data"
 	"github.com/PLDao/gin-frame/internal/model"
+	log "github.com/PLDao/gin-frame/internal/pkg/logger"
 	"github.com/PLDao/gin-frame/internal/routers"
 	"github.com/PLDao/gin-frame/internal/validator"
 	"github.com/gin-gonic/gin"
@@ -42,12 +43,14 @@ func run() error {
 	engine := routers.SetRouters()
 	if setRoute {
 		RegisterRoutes(engine)
+		log.Logger.Sugar().Infof("Set database API route table success")
 		return nil
 	}
 	err := engine.Run(fmt.Sprintf("%s:%d", host, port))
 	if err != nil {
 		return err
 	}
+	log.Logger.Sugar().Infof("Server is running on %s:%d", host, port)
 	return nil
 }
 

@@ -3,9 +3,10 @@ package errors
 const (
 	SUCCESS             = 0
 	FAILURE             = 1
-	AuthorizationError  = 403
-	NotFound            = 404
-	NotLogin            = 401
+	AuthorizationError  = 410
+	NotFound            = 411
+	NotLogin            = 412
+	NotTimeout          = 413
 	InvalidParameter    = 10000
 	UserDoesNotExist    = 10001
 	ServerError         = 10101
