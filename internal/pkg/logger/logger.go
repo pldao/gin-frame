@@ -22,7 +22,7 @@ func InitLogger() {
 // initZapLog 初始化 zap 日志
 func createZapLog() *zap.Logger {
 	// 开启 debug
-	if config.Config.Debug == true {
+	if config.Config.Debug {
 		if Logger, err := zap.NewDevelopment(); err == nil {
 			return Logger
 		} else {

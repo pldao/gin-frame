@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"github.com/gin-gonic/gin"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -42,6 +42,6 @@ func GetBody(c *gin.Context) []byte {
 		return nil
 	}
 	//把读过的字节流重新放到body
-	c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(body))
+	c.Request.Body = io.NopCloser(bytes.NewBuffer(body))
 	return body
 }

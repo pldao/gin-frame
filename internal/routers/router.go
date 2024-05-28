@@ -13,7 +13,7 @@ import (
 func SetRouters() *gin.Engine {
 	var engine *gin.Engine
 
-	if config.Config.Debug == false {
+	if !config.Config.Debug {
 		// 生产模式
 		engine = ReleaseRouter()
 		engine.Use(
@@ -40,8 +40,9 @@ func SetRouters() *gin.Engine {
 
 	// 功能性middleware
 	engine.Use(
-		middleware.NewRateLimiter().IpLimit,
+		middleware.IpLimit(),
 		middleware.TimestampMiddleware(),
+		middleware.AecMiddleware(),
 	)
 	//e.Use(ipLimit.RateLimit(1 * time.Second, 15, 15))
 

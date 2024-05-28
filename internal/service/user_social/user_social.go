@@ -42,6 +42,10 @@ func (s *UserAddSocialController) AddSocial(param *form.UserSocial) error {
 func (s *UserAddSocialController) UpdateSocial(param *form.UserSocial) error {
 	socialModel := model.NewSocial()
 	userData, err := s.listSocial(&form.UserName{UserName: param.UserName})
+	if err != nil {
+		err := e.NewBusinessError(e.SocialListError, "social list error")
+		return err
+	}
 	for i, v := range userData.Socials {
 		if v.SocialName == param.SocialName {
 			err = socialModel.UpdateSocial(param)

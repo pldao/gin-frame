@@ -29,7 +29,6 @@ func (api UserSocialController) AddUserSocial(c *gin.Context) {
 		return
 	}
 	api.Success(c, nil)
-	return
 }
 
 func (api UserSocialController) GetAllUserSocial(c *gin.Context) {
@@ -56,5 +55,4 @@ func (api UserSocialController) UpdateSocial(c *gin.Context) {
 		return
 	}
 	api.Success(c, nil)
-	return
 }
