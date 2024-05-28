@@ -16,10 +16,10 @@ const (
 )
 
 func (t FormatDate) MarshalJSON() ([]byte, error) {
-	if &t == nil || t.IsZero() {
+	if t.Time.IsZero() {
 		return []byte("null"), nil
 	}
-	return []byte(fmt.Sprintf("\"%s\"", t.Format(timeFormat))), nil
+	return []byte(t.Time.Format(`"` + timeFormat + `"`)), nil
 }
 
 func (t FormatDate) Value() (driver.Value, error) {
@@ -42,7 +42,7 @@ func (t *FormatDate) String() string {
 	if t == nil || t.IsZero() {
 		return ""
 	}
-	return fmt.Sprintf("%s", t.Time.Format(timeFormat))
+	return t.Time.Format(timeFormat)
 }
 
 func (t *FormatDate) UnmarshalJSON(data []byte) error {

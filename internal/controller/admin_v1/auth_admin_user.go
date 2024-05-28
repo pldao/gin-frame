@@ -23,7 +23,6 @@ func (api AdminUserController) GetUserInfo(c *gin.Context) {
 		return
 	}
 	api.Success(c, result)
-	return
 }
 
 func (api AdminUserController) Add(c *gin.Context) {
@@ -39,7 +38,6 @@ func (api AdminUserController) Add(c *gin.Context) {
 		return
 	}
 	api.Success(c, result)
-	return
 }
 
 func (api AdminUserController) Delete(c *gin.Context) {
@@ -55,7 +53,6 @@ func (api AdminUserController) Delete(c *gin.Context) {
 		return
 	}
 	api.Success(c, result)
-	return
 }
 
 func (api AdminUserController) AddUser(c *gin.Context) {
@@ -69,6 +66,4 @@ func (api AdminUserController) AddUser(c *gin.Context) {
 		return
 	}
 	api.Success(c, "success")
-	return
-
 }

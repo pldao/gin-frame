@@ -28,20 +28,13 @@ func initMongoDB() {
 
 	// 创建新的 MongoDB 客户端
 	var err error
-	MongoDB, err = mongo.NewClient(clientOptions)
-	if err != nil {
-		panic("Failed to create MongoDB client: " + err.Error())
-	}
-
 	// 连接到 MongoDB
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-
-	err = MongoDB.Connect(ctx)
+	MongoDB, err = mongo.Connect(ctx, clientOptions)
 	if err != nil {
-		panic("Failed to connect to MongoDB: " + err.Error())
+		panic("Failed to create MongoDB client: " + err.Error())
 	}
-
 	// Ping MongoDB 来验证连接
 	err = MongoDB.Ping(ctx, nil)
 	if err != nil {

@@ -32,5 +32,4 @@ func (api LoginController) Login(c *gin.Context) {
 		return
 	}
 	api.Success(c, result)
-	return
 }

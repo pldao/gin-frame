@@ -19,14 +19,6 @@ all: run
 # 启动后端程序
 run:
 	$(SERVER_CMD) server
-
-lint:
-	@echo "--> Running linter"
-	$(GOLINT) run --build-tags=$(GO_BUILD) --out-format=tab
-
-format: lint-install
-	@golangci-lint run --build-tags=$(GO_BUILD) --out-format=tab --fix
-
 # 将API全部存入数据库
 store-api:
 	$(SERVER_CMD) server -R true
@@ -48,9 +40,34 @@ install:
 	go mod verify
 	go mod download
 
-# 清理（可根据需要定义）
 clean:
-	# 这里可以添加清理临时文件或构建产物的命令
+
+###############################################################################
+###                                Linting                                  ###
+###############################################################################
+
+lint-install:
+	@echo "--> Checking if golangci-lint is installed or needs updating"
+	@if ! golangci-lint version --short 2>&1 | grep -q 'golangci-lint'; then \
+		echo "golangci-lint not found. Installing the latest version"; \
+		go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest; \
+	else \
+		current_version=$(golangci-lint version --short); \
+		latest_version=$(curl -s https://api.github.com/repos/golangci/golangci-lint/releases/latest | jq -r '.tag_name'); \
+		if [[ "$${current_version}" != "$${latest_version}" ]]; then \
+			echo "Updating golangci-lint from $${current_version} to $${latest_version}"; \
+			go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest; \
+		else \
+			echo "golangci-lint is already up-to-date at version $${current_version}"; \
+		fi \
+	fi
+
+lint: lint-install
+	@echo "--> Running linter"
+	$(GOLINT) run --build-tags=$(GO_BUILD) --out-format=tab
+
+format: lint-install
+	@golangci-lint run --build-tags=$(GO_BUILD) --out-format=tab --fix
 
 # 使用说明
 help:
@@ -61,5 +78,10 @@ help:
 	@echo "  make migrate-up - 数据库迁移 up"
 	@echo "  make migrate-down - 数据库迁移 down"
 	@echo "  make clean - 清理"
+	@echo "  make help - 显示帮助信息"
+	@echo "  make lint-install - 安装lint工具"
+	@echo "  make lint - 运行lint工具"
+	@echo "  make format - 格式化代码"
 
-.PHONY: all run store-api get-migrate migrate-up migrate-down clean help
+
+.PHONY: all run store-api get-migrate migrate-up migrate-down clean help lint-install lint format

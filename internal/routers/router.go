@@ -13,7 +13,7 @@ import (
 func SetRouters() *gin.Engine {
 	var engine *gin.Engine
 
-	if config.Config.Debug == false {
+	if !config.Config.Debug {
 		// 生产模式
 		engine = ReleaseRouter()
 		engine.Use(

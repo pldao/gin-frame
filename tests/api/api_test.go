@@ -27,17 +27,17 @@ type KeyValue struct {
 }
 
 func TestApi(t *testing.T) {
-	//datas := []KeyValue{
-	//	{"username", "super_admin"},
-	//	{"password", "123456"},
-	//}
-	//testmain(arrgument(datas), postRequest)
+	dataPost := []KeyValue{
+		{"username", "super_admin"},
+		{"password", "123456"},
+	}
+	testmain(arrgument(dataPost), posturl, postRequest)
 
-	datas := []KeyValue{
+	datasGet := []KeyValue{
 		{"username", "aexliu"},
 	}
-	testmain(arrgument(datas), geturl2, getRequest)
-	testmain(arrgument(datas), geturl1, getRequest)
+	testmain(arrgument(datasGet), geturl2, getRequest)
+	testmain(arrgument(datasGet), geturl1, getRequest)
 
 }
 

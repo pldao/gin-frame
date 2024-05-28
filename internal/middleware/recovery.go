@@ -18,7 +18,7 @@ func CustomRecovery() gin.HandlerFunc {
 	return gin.RecoveryWithWriter(DefaultErrorWriter, func(c *gin.Context, err interface{}) {
 		// 这里针对发生的panic等异常进行统一响应即可
 		errStr := ""
-		if config.Config.Debug == true {
+		if config.Config.Debug {
 			errStr = fmt.Sprintf("%v", err)
 		}
 		response.Resp().SetHttpCode(http.StatusInternalServerError).FailCode(c, e.ServerError, errStr)
