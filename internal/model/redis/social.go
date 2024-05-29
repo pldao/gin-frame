@@ -47,6 +47,6 @@ func (s *SocialCache) UpdateSocialListCache(data *resources.SocialCollection) er
 	if err != nil {
 		return err
 	}
-	err = s.Set(context.Background(), data.UserName, string(jsonData), 0).Err()
+	err = s.Set(context.Background(), data.UserName, string(jsonData), 3600).Err()
 	return err
 }

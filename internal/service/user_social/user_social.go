@@ -73,6 +73,7 @@ func (s *UserAddSocialController) ListSocial(param *form.UserName) (*resources.S
 		err := e.NewBusinessError(e.SocialListError, "mongo error")
 		return nil, err
 	}
+	s.updateSocialCache(data)
 	return data, nil
 }
 
