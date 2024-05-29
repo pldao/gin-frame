@@ -9,10 +9,6 @@ DB_MIGRATE_CMD := migrate -database 'mysql://root:sky@tcp(127.0.0.1:3307)/ginfra
 MIGRATION_PATH := data/migrations
 GOLINT=golangci-lint
 
-setup:
-	go mod tidy
-	go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
-
 # 目标规则
 all: run
 
@@ -39,6 +35,9 @@ install:
 	go mod tidy
 	go mod verify
 	go mod download
+
+swag:
+	swag init -g main.go
 
 clean:
 
