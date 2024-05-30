@@ -1,6 +1,7 @@
 package external
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/go-resty/resty/v2"
 	"time"
@@ -20,7 +21,9 @@ func NewClient(baseURL, apiKey string) *Client {
 		SetRetryCount(3).
 		SetRetryWaitTime(5*time.Second).
 		SetHeader("Content-Type", "application/json").
-		SetHeader("Ok-Access-Key", apiKey)
+		SetHeader("Ok-Access-Key", apiKey).
+		SetHeader("X-API-KEY", apiKey)
+	//Authorization
 
 	return &Client{
 		RestyClient: client,
@@ -30,7 +33,7 @@ func NewClient(baseURL, apiKey string) *Client {
 }
 
 // SendRequest 发送 HTTP 请求并返回响应
-func (c *Client) SendRequest(method, endpoint string, payload interface{}) (string, error) {
+func (c *Client) SendRequest(method, endpoint string, payload interface{}) ([]byte, error) {
 	url := c.BaseURL + endpoint
 
 	var resp *resty.Response
@@ -38,32 +41,55 @@ func (c *Client) SendRequest(method, endpoint string, payload interface{}) (stri
 
 	switch method {
 	case "GET":
-		resp, err = c.RestyClient.R().
-			SetQueryParams(payload.(map[string]string)).
-			Get(url)
+		request := c.RestyClient.R()
+		if payload != nil {
+			request.SetQueryParams(payload.(map[string]string))
+		}
+		resp, err = request.Get(url)
 	case "POST":
-		resp, err = c.RestyClient.R().
-			SetBody(payload).
-			Post(url)
+		request := c.RestyClient.R()
+		if payload != nil {
+			request.SetBody(payload)
+		}
+		resp, err = request.Post(url)
 	case "PUT":
-		resp, err = c.RestyClient.R().
-			SetBody(payload).
-			Put(url)
+		request := c.RestyClient.R()
+		if payload != nil {
+			request.SetBody(payload)
+		}
+		resp, err = request.Put(url)
 	case "DELETE":
-		resp, err = c.RestyClient.R().
-			SetBody(payload).
-			Delete(url)
+		request := c.RestyClient.R()
+		if payload != nil {
+			request.SetBody(payload)
+		}
+		resp, err = request.Delete(url)
 	default:
-		return "", fmt.Errorf("unsupported HTTP method: %s", method)
+		return nil, fmt.Errorf("unsupported HTTP method: %s", method)
 	}
 
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	if resp.IsError() {
-		return "", fmt.Errorf("request failed with status: %s", resp.Status())
+		return nil, fmt.Errorf("request failed with status: %s", resp.Status())
+	}
+	fmt.Println("Response Body:", resp.String())
+
+	return resp.Body(), nil
+}
+
+func (c *Client) SendRequestAndParseJSON(method, endpoint string, payload interface{}, result interface{}) error {
+	body, err := c.SendRequest(method, endpoint, payload)
+	if err != nil {
+		return err
 	}
 
-	return resp.String(), nil
+	err = json.Unmarshal(body, result)
+	if err != nil {
+		return fmt.Errorf("failed to parse JSON: %v", err)
+	}
+
+	return nil
 }
