@@ -1,5 +1,5 @@
 #!/bin/bash
-
+rm -rf data
 # 启动 Redis 服务
 echo "Starting Redis..."
 cd ./redis
@@ -17,5 +17,11 @@ echo "Starting MySQL..."
 cd ../mysql
 docker-compose up -d
 echo "MySQL started successfully!"
+
+# 启动 Minio 服务
+echo "Starting Minio..."
+cd ../minio
+docker-compose up -d
+echo "Minio started successfully!"
 
 echo "All services started successfully!"

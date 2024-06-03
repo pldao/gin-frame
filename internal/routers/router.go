@@ -6,8 +6,6 @@ import (
 	"github.com/PLDao/gin-frame/internal/pkg/errors"
 	response2 "github.com/PLDao/gin-frame/internal/pkg/response"
 	"github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 	"io"
 	"net/http"
 )
@@ -41,14 +39,14 @@ func SetRouters() *gin.Engine {
 	}
 
 	// 功能性middleware
-	engine.Use(
-		middleware.IpLimit(),
-		//middleware.TimestampMiddleware(),
-		//middleware.AecMiddleware(),
-	)
+	//engine.Use(
+	//middleware.IpLimit(),
+	//middleware.TimestampMiddleware(),
+	//middleware.AecMiddleware(),
+	//)
 	//e.Use(ipLimit.RateLimit(1 * time.Second, 15, 15))
 
-	engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	//engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	// 设置 API 路由
 	SetAdminApiRoute(engine)
 

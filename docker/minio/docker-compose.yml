@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  minio:
+    image: minio/minio
+    container_name: minio
+    environment:
+      MINIO_ROOT_USER: alex
+      MINIO_ROOT_PASSWORD: pureblack
+    ports:
+      - "9000:9000"
+      - "9001:9001" # 如果你想使用HTTPS，可以映射此端口
+    volumes:
+      - ../data/minio/minio_data:/data
+    command: server /data --console-address ":9001"
+
+volumes:
+  minio_data:
+
