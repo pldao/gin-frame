@@ -21,6 +21,7 @@ type Conf struct {
 	Jwt       JwtConfig    `mapstructure:"jwt"`
 	Limit     LimitConfig  `mapstructure:"limit"`
 	Mongo     MongoConfig  `mapstructure:"mongo"`
+	Minio     MinioConfig  `mapstructure:"minio"`
 }
 
 var (
@@ -32,6 +33,7 @@ var (
 		Jwt:       Jwt,
 		Limit:     Limit,
 		Mongo:     Mongo,
+		Minio:     Minio,
 	}
 	once sync.Once
 	V    *viper.Viper

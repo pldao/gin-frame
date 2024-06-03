@@ -41,13 +41,21 @@ logger:
 limit:
   max_requests: 100
   time_window: 1s
-Mongo:
-  Enable: true
-  Host: 127.0.0.1
-  Port: 27017
-  Username: root
-  Password: examplepassword
-  Database: yourdbname
-  MaxPoolSize: 100
-  MinPoolSize: 10
-  MaxConnIdleTime: 30s
+mongo:
+  enable: true
+  host: 127.0.0.1
+  port: 27017
+  username: root
+  password: examplepassword
+  database: yourdbname
+  max_pool_size: 100
+  min_pool_size: 10
+  max_conn_idle_time: 30s
+minio:
+  enable: false
+  endpoint: 127.0.0.1
+  port: 9000
+  access_key_id: alex
+  secret_access_key: pureblack
+  use_ssl: false
+  bucket_name: test
