@@ -12,7 +12,7 @@ require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-resty/resty/v2 v2.13.1
 	github.com/golang-jwt/jwt/v5 v5.0.0
-	github.com/jinzhu/copier v0.3.5
+	github.com/jinzhu/copier v0.4.0
 	github.com/juju/ratelimit v1.0.2
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
 	github.com/magiconair/properties v1.8.7
