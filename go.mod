@@ -11,7 +11,7 @@ require (
 	github.com/go-playground/validator/v10 v10.27.0
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-resty/resty/v2 v2.13.1
-	github.com/golang-jwt/jwt/v5 v5.0.0
+	github.com/golang-jwt/jwt/v5 v5.3.0
 	github.com/jinzhu/copier v0.3.5
 	github.com/juju/ratelimit v1.0.2
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
